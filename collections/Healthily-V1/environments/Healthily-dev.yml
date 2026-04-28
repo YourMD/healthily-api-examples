@@ -4,8 +4,8 @@ variables:
     value: https://portal-dev.dev.your.md/api
   - name: version
     value: v1
-  - name: partner_id
-    value: secret
+  - secret: true
+    name: partner_id
   - secret: true
     name: secret
   - secret: true

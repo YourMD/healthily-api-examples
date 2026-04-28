@@ -22,6 +22,9 @@ jobs:
             --env-var x_api_key=${X_API_KEY}
 
 workflows:
+  manual-tests:
+    jobs:
+      - run-scenario-tests
   scheduled-tests:
     jobs:
       - run-scenario-tests
