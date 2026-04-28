@@ -1,0 +1,76 @@
+info:
+  name: Initial query
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: "{{base_url}}/{{version}}/initial"
+  headers:
+    - name: x-api-key
+      value: "{{x_api_key}}"
+  body:
+    type: json
+    data: |-
+      {
+          "gender": "male",
+          "age": 31,
+          "initial_query": "Tell me about COVID"
+      }
+  auth:
+    type: bearer
+    token: "{{v5_upgraded_token}}"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        const body = res.getBody();
+
+        test("1. Triage level display name matches", function () {
+          expect(body.report.overall_outcome.subdomain_triage_level.display_name).to.equal("Information");
+        });
+
+        test("2. Main recommendation matches", function () {
+          expect(body.report.overall_outcome.main_recommendation).to.equal("This information may be helpful");
+        });
+
+        test("3. Messages value matches", function () {
+          const messages = body.report.overall_outcome.messages;
+
+          expect(messages).to.be.an("array");
+          expect(messages.length).to.equal(2);
+
+          expect(messages.map(m => m.value)).to.deep.equal([
+            "You have not received an assessment at this time. Your query has been used to search medically verified articles and provide results related to the information you entered. You can find these in “Content you might find useful”. Please note, these articles may provide useful information but are not a diagnosis or a recommendation.",
+            "If you need emergency medical help, please call 999. Otherwise please contact your doctor, NHS 111, or see “Your other options”."
+          ]);
+        });
+
+        test("4. Contains instructions array", function () {
+          const instructions = body.report.overall_outcome.instructions;
+
+          expect(instructions).to.be.an("array");
+          expect(instructions.length).to.be.greaterThan(0);
+          expect(instructions[0].value).to.equal("How to use the assessment");
+        });
+
+        test("5. Contains other options array", function () {
+          const options = body.report.other_options.options;
+
+          expect(options).to.be.an("array");
+          expect(options.length).to.be.greaterThan(0);
+        });
+
+        test("6. Contains information articles", function () {
+          const articles = body.report.information_articles.information_articles;
+
+          expect(articles).to.be.an("array");
+          expect(articles.length).to.be.greaterThan(0);
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

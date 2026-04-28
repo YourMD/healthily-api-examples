@@ -1,0 +1,28 @@
+info:
+  name: Initial query
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: "{{base_url}}/{{version}}/initial"
+  headers:
+    - name: x-api-key
+      value: "{{x_api_key}}"
+  body:
+    type: json
+    data: |-
+      {
+          "gender": "male",
+          "age": 31,
+          "initial_query": "blah blah blah"
+      }
+  auth:
+    type: bearer
+    token: "{{v5_upgraded_token}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

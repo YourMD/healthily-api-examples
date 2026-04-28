@@ -1,0 +1,7 @@
+info:
+  name: Earache Jaw clicks with autocomplete skip
+  type: folder
+  seq: 4
+
+request:
+  auth: inherit

@@ -1,0 +1,7 @@
+info:
+  name: Earache Jaw clicks convo
+  type: folder
+  seq: 1
+
+request:
+  auth: inherit

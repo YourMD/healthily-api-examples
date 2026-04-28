@@ -1,0 +1,94 @@
+info:
+  name: Report
+  type: http
+  seq: 24
+
+http:
+  method: GET
+  url: "{{base_url}}/{{version}}/report"
+  headers:
+    - name: x-api-key
+      value: "{{x_api_key}}"
+  auth:
+    type: bearer
+    token: "{{v5_upgraded_token}}"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        const responseData = res.getBody();
+
+        // =============================
+        // Validate overall outcome
+        // =============================
+        test("Overall outcome level is 'Urgent'", function () {
+            expect(responseData.report.overall_outcome.subdomain_triage_level.display_name).to.eql("Urgent");
+        });
+
+        test("Service recommendation is 'Your NHS GP'", function () {
+            expect(responseData.report.overall_outcome.main_service_recommendation).to.eql("Your NHS GP");
+        });
+
+        // =============================
+        // Validate 'to rule out' structure
+        // =============================
+        let categories = responseData.report.subdomains_container.subdomains_categories;
+
+        test("'subdomains_categories' array should contain exactly one item", function () {
+            expect(categories).to.be.an("array");
+            expect(categories.length).to.eql(1);
+        });
+
+        test("Category type is 'TO_RULE_OUT'", function () {
+            expect(categories[0].subdomain_type).to.eql("TO_RULE_OUT");
+        });
+
+        let item = categories[0].subdomains[0];
+
+        // -----------------------------
+        // Validate primary to-rule-out entry
+        // -----------------------------
+        test("To-rule-out CUI is CM001896", function () {
+            expect(item.cui).to.eql("CM001896");
+        });
+
+        test("To-rule-out name is 'Nerve and brain disorder(s)'", function () {
+            expect(item.name).to.eql("Nerve and brain disorder(s)");
+        });
+
+        test("To-rule-out level is 'Urgent'", function () {
+            expect(item.subdomain_triage_level.display_name).to.eql("Urgent");
+        });
+
+        test("To-rule-out primary service is 'Your NHS GP'", function () {
+            expect(item.primary_service).to.eql("Your NHS GP");
+        });
+
+        // =============================
+        // Validate first condition
+        // =============================
+        test("To-rule-out item has one condition", function () {
+            expect(item.conditions).to.be.an("array");
+            expect(item.conditions.length).to.eql(1);
+        });
+
+        let cond = item.conditions[0];
+
+        test("Condition CUI is C0006118", function () {
+            expect(cond.cui).to.eql("C0006118");
+        });
+
+        test("Condition level is 'Urgent'", function () {
+            expect(cond.level.display_name).to.eql("Urgent");
+        });
+
+        test("Condition primary service is 'Your NHS GP'", function () {
+            expect(cond.primary_service).to.eql("Your NHS GP");
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

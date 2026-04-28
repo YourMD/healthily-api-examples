@@ -1,0 +1,31 @@
+info:
+  name: Send Analytics
+  type: http
+  seq: 5
+
+http:
+  method: POST
+  url: "{{base_url}}/{{version}}/analytics"
+  headers:
+    - name: x-api-key
+      value: "{{x_api_key}}"
+  body:
+    type: json
+    data: |-
+      {
+          "event": "test",
+          "value": {
+              "gender": "male",
+              "age": "31",
+              "bla": "dave test"
+          }
+      }
+  auth:
+    type: bearer
+    token: "{{v5_upgraded_token}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

@@ -1,0 +1,29 @@
+info:
+  name: Symptoms 10
+  type: http
+  seq: 21
+
+http:
+  method: POST
+  url: "{{base_url}}/{{version}}/chat"
+  headers:
+    - name: x-api-key
+      value: "{{x_api_key}}"
+
+  body:
+    type: json
+    data: |-
+      {
+          "type": "symptoms",
+          "included": [],
+          "excluded": ["C0038990", "C0042940", "C1398357", "C0242350"]
+      }
+  auth:
+    type: bearer
+    token: "{{v5_upgraded_token}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

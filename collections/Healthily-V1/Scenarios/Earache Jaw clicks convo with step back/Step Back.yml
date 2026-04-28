@@ -1,0 +1,20 @@
+info:
+  name: Step Back
+  type: http
+  seq: 10
+
+http:
+  method: POST
+  url: "{{base_url}}/{{version}}/step-back"
+  headers:
+    - name: x-api-key
+      value: "{{x_api_key}}"
+  auth:
+    type: bearer
+    token: "{{v5_upgraded_token}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

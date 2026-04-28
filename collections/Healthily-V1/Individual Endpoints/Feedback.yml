@@ -1,0 +1,28 @@
+info:
+  name: Feedback
+  type: http
+  seq: 9
+
+http:
+  method: POST
+  url: "{{base_url}}/{{version}}/analytics/feedback"
+  headers:
+    - name: x-api-key
+      value: "{{x_api_key}}"
+  body:
+    type: json
+    data: |-
+      {
+          "stars": 5,
+          "labels": ["some_type", "some_other_type"],
+          "message": "Radu test new API"
+      }
+  auth:
+    type: bearer
+    token: "{{v5_upgraded_token}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

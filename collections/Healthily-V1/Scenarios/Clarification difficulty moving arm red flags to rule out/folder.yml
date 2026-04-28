@@ -1,0 +1,7 @@
+info:
+  name: Clarification difficulty moving arm red flags to rule out
+  type: folder
+  seq: 5
+
+request:
+  auth: inherit

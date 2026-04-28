@@ -1,0 +1,24 @@
+info:
+  name: Get articles
+  type: http
+  seq: 12
+
+http:
+  method: GET
+  url: "{{base_url}}/{{version}}/articles?ids=migraines,con-ovulation"
+  headers:
+    - name: x-api-key
+      value: "{{x_api_key}}"
+  params:
+    - name: ids
+      value: migraines,con-ovulation
+      type: query
+  auth:
+    type: bearer
+    token: "{{v5_upgraded_token}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

@@ -1,0 +1,28 @@
+info:
+  name: Clarify upper arm
+  type: http
+  seq: 8
+
+http:
+  method: POST
+  url: "{{base_url}}/{{version}}/chat"
+  headers:
+    - name: x-api-key
+      value: "{{x_api_key}}"
+  body:
+    type: json
+    data: |-
+      {
+          "type": "generic",
+          "included": ["A290201"],
+          "excluded": ["A290202", "A290203"]
+      }
+  auth:
+    type: bearer
+    token: "{{v5_upgraded_token}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

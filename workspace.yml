@@ -1,0 +1,12 @@
+opencollection: 1.0.0
+info:
+  name: "Healthily API Examples"
+  type: workspace
+
+collections:
+  - name: "Healthily V1"
+    path: "collections/Healthily-V1"
+
+specs:
+
+docs: ''

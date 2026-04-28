@@ -1,0 +1,34 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@5.2.0
+
+jobs:
+  run-scenario-tests:
+    executor: node/default
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - run:
+          name: Run Bruno scenario tests
+          command: >
+            cd collections/Healthily-V1 &&
+            npx --yes @usebruno/cli run Scenarios -r --env "Healthily-dev"
+            --env-var base_url=${BASE_URL}
+            --env-var version=${VERSION}
+            --env-var partner_id=${PARTNER_ID}
+            --env-var secret=${SECRET}
+            --env-var x_api_key=${X_API_KEY}
+
+workflows:
+  scheduled-tests:
+    jobs:
+      - run-scenario-tests
+    triggers:
+      - schedule:
+          cron: "0 5 * * *"
+          filters:
+            branches:
+              only:
+                - main

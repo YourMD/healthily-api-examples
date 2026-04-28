@@ -1,0 +1,9 @@
+info:
+  name: Individual Endpoints
+  type: folder
+  seq: 1
+
+request:
+  auth:
+    type: bearer
+    token: "{{v5_upgraded_token}}"

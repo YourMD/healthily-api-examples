@@ -1,0 +1,7 @@
+info:
+  name: Assessment not possible 1 variation
+  type: folder
+  seq: 3
+
+request:
+  auth: inherit

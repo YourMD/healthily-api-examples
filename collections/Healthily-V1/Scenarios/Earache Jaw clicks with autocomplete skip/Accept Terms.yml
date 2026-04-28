@@ -1,0 +1,32 @@
+info:
+  name: Accept Terms
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{base_url}}/{{version}}/terms"
+  headers:
+    - name: x-api-key
+      value: "{{x_api_key}}"
+  body:
+    type: json
+    data: |-
+      {
+          "content_version": "{{terms_version}}",
+          "all_policies_accepted": "true"
+      }
+  auth:
+    type: bearer
+    token: "{{v5_token}}"
+
+runtime:
+  scripts:
+    - type: after-response
+      code: bru.setVar("v5_upgraded_token", res.getBody().login_response.access_token);
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

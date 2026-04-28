@@ -1,0 +1,7 @@
+info:
+  name: No cause found 1
+  type: folder
+  seq: 5
+
+request:
+  auth: inherit

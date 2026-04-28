@@ -1,0 +1,79 @@
+info:
+  name: Report
+  type: http
+  seq: 14
+
+http:
+  method: GET
+  url: "{{base_url}}/{{version}}/report"
+  headers:
+    - name: x-api-key
+      value: "{{x_api_key}}"
+  auth:
+    type: bearer
+    token: "{{v5_upgraded_token}}"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        const responseData = res.getBody();
+
+        // =============================
+        // Validate overall outcome
+        // =============================
+        test("Overall outcome level is 'Non-urgent'", function () {
+            expect(responseData.report.overall_outcome.subdomain_triage_level.display_name).to.eql("Non-urgent");
+        });
+
+        test("Service recommendation is 'Virtual GP Service'", function () {
+            expect(responseData.report.overall_outcome.main_service_recommendation).to.eql("Virtual GP Service");
+        });
+
+        // =============================
+        // Validate 'likely' structure
+        // =============================
+        let likely = responseData.report.subdomains_container.subdomains_categories;
+
+        // Must exist and have exactly one entry
+        test("'likely' array should contain exactly one item", function () {
+            expect(likely).to.be.an("array");
+            expect(likely.length).to.eql(1);
+        });
+
+        let item = likely[0].subdomains[0];
+
+        // -----------------------------
+        // Validate primary likely entry
+        // -----------------------------
+        test("Likely CUI is CM001889", function () {
+            expect(item.cui).to.eql("CM001889");
+        });
+
+        test("Likely level is 'Non-urgent'", function () {
+            expect(item.subdomain_triage_level.display_name).to.eql("Non-urgent");
+        });
+
+        // =============================
+        // Validate first condition
+        // =============================
+        test("Likely item has one condition", function () {
+            expect(item.conditions).to.be.an("array");
+            expect(item.conditions.length).to.eql(1);
+        });
+
+        let cond = item.conditions[0];
+
+        test("Condition CUI is C0039494", function () {
+            expect(cond.cui).to.eql("C0039494");
+        });
+
+        test("Condition level is 'Non-urgent'", function () {
+            expect(cond.level.display_name).to.eql("Non-urgent");
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

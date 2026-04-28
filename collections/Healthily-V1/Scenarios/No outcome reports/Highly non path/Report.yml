@@ -1,0 +1,84 @@
+info:
+  name: Report
+  type: http
+  seq: 24
+
+http:
+  method: GET
+  url: "{{base_url}}/{{version}}/report"
+  headers:
+    - name: x-api-key
+      value: "{{x_api_key}}"
+  auth:
+    type: bearer
+    token: "{{v5_upgraded_token}}"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        const responseData = res.getBody();
+
+        // =============================
+        // Validate overall outcome
+        // =============================
+        test("Overall outcome level is 'No outcome'", function () {
+            expect(responseData.report.overall_outcome.subdomain_triage_level.display_name).to.eql("No outcome");
+        });
+
+        test("Main recommendation is 'You have a limited number of symptoms'", function () {
+            expect(responseData.report.overall_outcome.main_recommendation).to.eql("You have a limited number of symptoms");
+        });
+
+        // =============================
+        // Validate no subdomains present
+        // =============================
+        test("'subdomains_container' is absent", function () {
+            expect(responseData.report.subdomains_container).to.not.exist;
+        });
+
+        // =============================
+        // Validate other options
+        // =============================
+        let options = responseData.report.other_options.options;
+
+        test("'other_options' array should contain exactly three items", function () {
+            expect(options).to.be.an("array");
+            expect(options.length).to.eql(3);
+        });
+
+        test("First option is 'Virtual GP Service'", function () {
+            expect(options[0].messages[0].value).to.eql("Virtual GP Service");
+        });
+
+        test("Second option is 'NHS 111'", function () {
+            expect(options[1].messages[0].value).to.eql("NHS 111");
+        });
+
+        test("Third option is 'Ambulance'", function () {
+            expect(options[2].messages[0].value).to.eql("Ambulance");
+        });
+
+        // =============================
+        // Validate information articles
+        // =============================
+        let articles = responseData.report.information_articles.information_articles;
+
+        test("'information_articles' array should contain exactly two items", function () {
+            expect(articles).to.be.an("array");
+            expect(articles.length).to.eql(2);
+        });
+
+        test("First article id is 'con-style-your-hair-to-minimise-hair-loss'", function () {
+            expect(articles[0].id).to.eql("con-style-your-hair-to-minimise-hair-loss");
+        });
+
+        test("Second article id is 'con-how-to-manage-pcos-hair-loss'", function () {
+            expect(articles[1].id).to.eql("con-how-to-manage-pcos-hair-loss");
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

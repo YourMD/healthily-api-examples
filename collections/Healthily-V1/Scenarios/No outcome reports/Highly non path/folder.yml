@@ -1,0 +1,7 @@
+info:
+  name: Highly non path
+  type: folder
+  seq: 7
+
+request:
+  auth: inherit
