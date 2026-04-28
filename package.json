@@ -1,0 +1,8 @@
+{
+  "name": "healthily-api-examples",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@usebruno/cli": "3.3.0"
+  }
+}
