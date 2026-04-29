@@ -6,6 +6,7 @@ orbs:
 jobs:
   run-scenario-tests:
     executor: node/default
+    resource_class: medium
     steps:
       - checkout
       - node/install-packages:
