@@ -1,7 +1,7 @@
 info:
   name: Symptom Injury
   type: http
-  seq: 21
+  seq: 19
 
 http:
   method: POST

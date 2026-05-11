@@ -1,7 +1,7 @@
 info:
   name: Report
   type: http
-  seq: 23
+  seq: 22
 
 http:
   method: GET

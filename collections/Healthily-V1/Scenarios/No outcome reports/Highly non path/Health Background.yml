@@ -9,14 +9,13 @@ http:
   headers:
     - name: x-api-key
       value: "{{x_api_key}}"
-
   body:
     type: json
     data: |-
       {
           "type": "health_background",
           "included": [],
-          "excluded": ["C0020538", "C0011849", "C0004096", "C0010054", "C0403447", "C0024117", "C0038454"]
+          "excluded": ["C0011849", "C0004096", "C0010054", "C0403447", "C0024117", "C0038454", "C0020538", "C0028754", "C0337664"]
       }
   auth:
     type: bearer
