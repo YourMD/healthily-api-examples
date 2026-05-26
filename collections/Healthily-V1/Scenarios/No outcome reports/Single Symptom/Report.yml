@@ -64,17 +64,13 @@ runtime:
         // =============================
         let articles = responseData.report.information_articles.information_articles;
 
-        test("'information_articles' array should contain exactly two items", function () {
+        test("'information_articles' array should contain exactly one item", function () {
             expect(articles).to.be.an("array");
-            expect(articles.length).to.eql(2);
+            expect(articles.length).to.eql(1);
         });
 
-        test("First article id is 'headaches-headachesinchildren'", function () {
-            expect(articles[0].id).to.eql("headaches-headachesinchildren");
-        });
-
-        test("Second article id is 'headaches-hormonalheadaches'", function () {
-            expect(articles[1].id).to.eql("headaches-hormonalheadaches");
+        test("The article id is 'headache'", function () {
+            expect(articles[0].id).to.eql("headache");
         });
 
 settings:

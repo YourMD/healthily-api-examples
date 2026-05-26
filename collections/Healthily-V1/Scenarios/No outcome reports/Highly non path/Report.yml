@@ -63,18 +63,13 @@ runtime:
         // Validate information articles
         // =============================
         let articles = responseData.report.information_articles.information_articles;
-
-        test("'information_articles' array should contain exactly two items", function () {
+        test("'information_articles' array should contain exactly one item", function () {
             expect(articles).to.be.an("array");
-            expect(articles.length).to.eql(2);
+            expect(articles.length).to.eql(1);
         });
 
-        test("First article id is 'con-style-your-hair-to-minimise-hair-loss'", function () {
-            expect(articles[0].id).to.eql("con-style-your-hair-to-minimise-hair-loss");
-        });
-
-        test("Second article id is 'con-how-to-manage-pcos-hair-loss'", function () {
-            expect(articles[1].id).to.eql("con-how-to-manage-pcos-hair-loss");
+        test("The article id is 'hair-loss'", function () {
+            expect(articles[0].id).to.eql("hair-loss");
         });
 
 settings:
