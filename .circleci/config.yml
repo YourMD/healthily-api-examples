@@ -36,21 +36,21 @@ workflows:
     jobs:
       - run-scenario-tests:
           target_env: "dev"
-          context: healthily-dev
+          context: api-dev
   manual-tests-staging:
     when:
       equal: ["staging", << pipeline.parameters.target_env >>]
     jobs:
       - run-scenario-tests:
           target_env: "staging"
-          context: healthily-staging
+          context: api-staging
   manual-tests-prod:
     when:
       equal: ["prod", << pipeline.parameters.target_env >>]
     jobs:
       - run-scenario-tests:
           target_env: "prod"
-          context: healthily-prod
+          context: api-prod
   scheduled-tests:
     triggers:
       - schedule:
@@ -63,8 +63,8 @@ workflows:
       - run-scenario-tests:
           name: scheduled-prod
           target_env: "prod"
-          context: healthily-prod
+          context: api-prod
       - run-scenario-tests:
           name: scheduled-staging
           target_env: "staging"
-          context: healthily-staging
+          context: api-staging
