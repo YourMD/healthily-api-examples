@@ -5,16 +5,16 @@ info:
 
 http:
   method: POST
-  url: "{{base_url}}/{{version}}/login"
+  url: "{{base_url}}/{{api_subpath}}/login"
   headers:
     - name: x-api-key
-      value: "{{x_api_key}}"
+      value: "{{api_key}}"
   body:
     type: json
     data: |-
       {
           "partner_id": "{{partner_id}}",
-          "secret": "{{secret}}"
+          "secret": "{{partner_secret}}"
       }
 
 runtime:

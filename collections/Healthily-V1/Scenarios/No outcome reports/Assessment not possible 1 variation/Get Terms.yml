@@ -5,10 +5,10 @@ info:
 
 http:
   method: GET
-  url: "{{base_url}}/{{version}}/terms"
+  url: "{{base_url}}/{{api_subpath}}/terms"
   headers:
     - name: x-api-key
-      value: "{{x_api_key}}"
+      value: "{{api_key}}"
   auth:
     type: bearer
     token: "{{v5_token}}"

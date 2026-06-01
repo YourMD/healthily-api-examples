@@ -5,10 +5,10 @@ info:
 
 http:
   method: POST
-  url: "{{base_url}}/{{version}}/analytics"
+  url: "{{base_url}}/{{api_subpath}}/analytics"
   headers:
     - name: x-api-key
-      value: "{{x_api_key}}"
+      value: "{{api_key}}"
   body:
     type: json
     data: |-

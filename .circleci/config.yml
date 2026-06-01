@@ -3,8 +3,17 @@ version: 2.1
 orbs:
   node: circleci/node@5.2.0
 
+parameters:
+  target_env:
+    type: enum
+    enum: ["dev", "staging", "prod"]
+    default: "dev"
+
 jobs:
   run-scenario-tests:
+    parameters:
+      target_env:
+        type: string
     executor: node/default
     resource_class: medium
     steps:
@@ -12,23 +21,37 @@ jobs:
       - node/install-packages:
           pkg-manager: npm
       - run:
-          name: Run Bruno scenario tests
-          command: >
-            cd collections/Healthily-V1 &&
-            npx --yes @usebruno/cli run Scenarios -r --env "Healthily-dev"
-            --env-var base_url=${BASE_URL}
-            --env-var version=${VERSION}
-            --env-var partner_id=${PARTNER_ID}
-            --env-var secret=${SECRET}
-            --env-var x_api_key=${X_API_KEY}
+          name: Run Bruno scenario tests on << parameters.target_env >>
+          command: |
+            cd collections/Healthily-V1
+            npx --yes @usebruno/cli run Scenarios -r --env "Healthily-<< parameters.target_env >>" \
+              --env-var partner_id="${PARTNER_ID}" \
+              --env-var partner_secret="${PARTNER_SECRET}" \
+              --env-var api_key="${API_KEY}"
 
 workflows:
-  manual-tests:
+  manual-tests-dev:
+    when:
+      equal: ["dev", << pipeline.parameters.target_env >>]
     jobs:
-      - run-scenario-tests
+      - run-scenario-tests:
+          target_env: "dev"
+          context: healthily-dev
+  manual-tests-staging:
+    when:
+      equal: ["staging", << pipeline.parameters.target_env >>]
+    jobs:
+      - run-scenario-tests:
+          target_env: "staging"
+          context: healthily-staging
+  manual-tests-prod:
+    when:
+      equal: ["prod", << pipeline.parameters.target_env >>]
+    jobs:
+      - run-scenario-tests:
+          target_env: "prod"
+          context: healthily-prod
   scheduled-tests:
-    jobs:
-      - run-scenario-tests
     triggers:
       - schedule:
           cron: "0 5 * * *"
@@ -36,3 +59,12 @@ workflows:
             branches:
               only:
                 - main
+    jobs:
+      - run-scenario-tests:
+          name: scheduled-prod
+          target_env: "prod"
+          context: healthily-prod
+      - run-scenario-tests:
+          name: scheduled-staging
+          target_env: "staging"
+          context: healthily-staging

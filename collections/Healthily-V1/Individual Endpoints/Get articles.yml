@@ -5,10 +5,10 @@ info:
 
 http:
   method: GET
-  url: "{{base_url}}/{{version}}/articles?ids=migraines,con-ovulation"
+  url: "{{base_url}}/{{api_subpath}}/articles?ids=migraines,con-ovulation"
   headers:
     - name: x-api-key
-      value: "{{x_api_key}}"
+      value: "{{api_key}}"
   params:
     - name: ids
       value: migraines,con-ovulation
