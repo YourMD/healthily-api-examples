@@ -15,7 +15,7 @@ http:
       {
           "type": "symptoms",
           "included": [],
-          "excluded": ["C0037011", "C0231528", "C0239377", "C0004604"]
+          "excluded": ["C0037383", "C0231528", "C0239377", "C1260880"]
       }
   auth:
     type: bearer
