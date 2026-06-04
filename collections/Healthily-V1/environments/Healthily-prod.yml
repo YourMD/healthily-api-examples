@@ -1,7 +1,7 @@
 name: Healthily-prod
 variables:
   - name: base_url
-    value: https://portal.your.md/
+    value: https://portal.your.md
   - name: api_subpath
     value: /api/v1
   - secret: true
