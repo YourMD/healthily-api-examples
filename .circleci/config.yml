@@ -6,8 +6,8 @@ orbs:
 parameters:
   target_env:
     type: enum
-    enum: ["dev", "staging", "prod"]
-    default: "dev"
+    enum: ["none", "dev", "staging", "prod"]
+    default: "none"
 
 jobs:
   run-scenario-tests:
