@@ -1,6 +1,6 @@
 # Healthily API Examples
 
-Runnable examples for the [Healthily](https://www.livehealthily.com) Smart Symptom Checker API, packaged as a [Bruno](https://www.usebruno.com) collection.
+Runnable examples for the Healthily Smart Symptom Checker API, packaged as a [Bruno](https://www.usebruno.com) collection.
 
 The Healthily API is conversational and stateful — most calls only make sense in the context of the calls that came before them (login → consent → initial query → symptom Q&A → report). This repo captures complete, real conversation flows as **Scenarios** you can replay end to end, alongside **Individual Endpoints** for reference on each call in isolation.
 
