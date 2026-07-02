@@ -1,7 +1,7 @@
 info:
-  name: Symptoms 2
+  name: Symptoms 9
   type: http
-  seq: 13
+  seq: 22
 
 http:
   method: POST
@@ -15,7 +15,7 @@ http:
       {
           "type": "symptoms",
           "included": [],
-          "excluded": ["C0007384", "C3277232", "C0028643", "C0042024"]
+          "excluded": ["C0520966", "C0575090", "C3665347", "C0241166"]
       }
   auth:
     type: bearer

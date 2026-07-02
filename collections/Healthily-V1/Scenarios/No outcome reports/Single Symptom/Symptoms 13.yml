@@ -1,7 +1,7 @@
 info:
-  name: Symptom Procedures
+  name: Symptoms 13
   type: http
-  seq: 18
+  seq: 22
 
 http:
   method: POST
@@ -13,9 +13,9 @@ http:
     type: json
     data: |-
       {
-          "type": "symptom",
-          "included": ["n"],
-          "excluded": ["y", "?"]
+          "type": "symptoms",
+          "included": [],
+          "excluded": ["C0030252", "C0578687", "C0003123", "C0011168"]
       }
   auth:
     type: bearer
