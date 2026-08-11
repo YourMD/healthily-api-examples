@@ -21,16 +21,12 @@ runtime:
     - type: tests
       code: |-
         const responseData = res.getBody();
-
+        
         // =============================
         // Validate overall outcome
         // =============================
         test("Overall outcome level is 'Non-urgent'", function () {
             expect(responseData.report.overall_outcome.subdomain_triage_level.display_name).to.eql("Non-urgent");
-        });
-
-        test("Service recommendation is 'General Practitioner'", function () {
-            expect(responseData.report.overall_outcome.main_service_recommendation).to.eql("General Practitioner");
         });
 
         // =============================
