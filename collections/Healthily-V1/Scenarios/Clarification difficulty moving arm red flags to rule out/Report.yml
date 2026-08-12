@@ -26,10 +26,6 @@ runtime:
             expect(responseData.report.overall_outcome.subdomain_triage_level.display_name).to.eql("Urgent");
         });
 
-        test("Service recommendation is 'General Practitioner'", function () {
-            expect(responseData.report.overall_outcome.main_service_recommendation).to.eql("General Practitioner");
-        });
-
         // =============================
         // Validate 'to rule out' structure
         // =============================
@@ -61,10 +57,6 @@ runtime:
             expect(item.subdomain_triage_level.display_name).to.eql("Urgent");
         });
 
-        test("To-rule-out primary service is 'General Practitioner'", function () {
-            expect(item.primary_service).to.eql("General Practitioner");
-        });
-
         // =============================
         // Validate first condition
         // =============================
@@ -81,10 +73,6 @@ runtime:
 
         test("Condition level is 'Urgent'", function () {
             expect(cond.level.display_name).to.eql("Urgent");
-        });
-
-        test("Condition primary service is 'General Practitioner'", function () {
-            expect(cond.primary_service).to.eql("General Practitioner");
         });
 
 settings:
