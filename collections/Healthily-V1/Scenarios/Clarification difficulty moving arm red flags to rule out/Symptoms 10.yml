@@ -1,7 +1,7 @@
 info:
-  name: Symptom CO2
+  name: Symptoms 10
   type: http
-  seq: 18
+  seq: 23
 
 http:
   method: POST
@@ -11,12 +11,13 @@ http:
       value: "{{api_key}}"
   body:
     type: json
-    data: |-
+    data: |+
       {
-          "type": "symptom",
-          "included": ["n"],
-          "excluded": ["y", "?"]
+          "type": "symptoms",
+          "included": [],
+          "excluded": ["C0003467", "C0002622", "C0003537", "CM000411"]
       }
+
   auth:
     type: bearer
     token: "{{v5_upgraded_token}}"

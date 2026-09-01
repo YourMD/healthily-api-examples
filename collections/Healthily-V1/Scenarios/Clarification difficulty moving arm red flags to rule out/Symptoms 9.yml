@@ -11,12 +11,13 @@ http:
       value: "{{api_key}}"
   body:
     type: json
-    data: |-
+    data: |+
       {
           "type": "symptoms",
           "included": [],
-          "excluded": ["C0520966", "C0575090", "C3665347", "C0241166"]
+          "excluded": ["C0241166", "C0033774", "C0683369", "C0231710"]
       }
+
   auth:
     type: bearer
     token: "{{v5_upgraded_token}}"
