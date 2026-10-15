@@ -1,0 +1,30 @@
+info:
+  name: Article AZ
+  type: http
+  seq: 14
+
+http:
+  method: GET
+  url: "{{base_url}}/{{api_subpath}}/articles/directory?q=head&letter=h&category=symptoms"
+  headers:
+    - name: x-api-key
+      value: "{{api_key}}"
+  params:
+    - name: q
+      value: head
+      type: query
+    - name: letter
+      value: h
+      type: query
+    - name: category
+      value: symptoms
+      type: query
+  auth:
+    type: bearer
+    token: "{{v5_upgraded_token}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

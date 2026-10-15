@@ -1,0 +1,44 @@
+info:
+  name: Get one article
+  type: http
+  seq: 5
+
+http:
+  method: GET
+  url: "{{base_url}}/{{api_subpath}}/article/headaches-hormonalheadaches"
+  headers:
+    - name: x-api-key
+      value: "{{api_key}}"
+  auth:
+    type: bearer
+    token: "{{v5_upgraded_token}}"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        const body = res.getBody();
+
+        test("1. Status is 200", function () {
+          expect(res.getStatus()).to.equal(200);
+        });
+
+        test("2. Article id matches", function () {
+          expect(body.id).to.equal("headaches-hormonalheadaches");
+        });
+
+        test("3. Has a title and snippet", function () {
+          expect(body.title).to.be.a("string").that.is.not.empty;
+          expect(body.snippet).to.be.a("string").that.is.not.empty;
+        });
+
+        test("4. Contains paragraphs", function () {
+          expect(body.paragraphs).to.be.an("array");
+          expect(body.paragraphs.length).to.be.greaterThan(0);
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
