@@ -1,0 +1,29 @@
+info:
+  name: Login
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{base_url}}/{{api_subpath}}/login"
+  headers:
+    - name: x-api-key
+      value: "{{api_key}}"
+  body:
+    type: json
+    data: |-
+      {
+          "partner_id": "{{partner_id}}",
+          "secret": "{{partner_secret}}"
+      }
+
+runtime:
+  scripts:
+    - type: after-response
+      code: bru.setVar("v5_token", res.getBody().access_token);
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

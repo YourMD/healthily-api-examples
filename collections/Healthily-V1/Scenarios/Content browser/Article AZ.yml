@@ -1,0 +1,62 @@
+info:
+  name: Article AZ
+  type: http
+  seq: 4
+
+http:
+  method: GET
+  url: "{{base_url}}/{{api_subpath}}/articles/directory?q=head&letter=h&category=symptoms"
+  headers:
+    - name: x-api-key
+      value: "{{api_key}}"
+  params:
+    - name: q
+      value: head
+      type: query
+    - name: letter
+      value: h
+      type: query
+    - name: category
+      value: symptoms
+      type: query
+  auth:
+    type: bearer
+    token: "{{v5_upgraded_token}}"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        const body = res.getBody();
+        const articles = (body.sections || []).flatMap(s => s.articles);
+
+        test("1. Status is 200", function () {
+          expect(res.getStatus()).to.equal(200);
+        });
+
+        test("2. Only the H section is returned", function () {
+          expect(body.sections).to.be.an("array");
+          expect(body.sections.map(s => s.letter)).to.deep.equal(["H"]);
+        });
+
+        test("3. Total matches the number of articles", function () {
+          expect(articles.length).to.be.greaterThan(0);
+          expect(body.total).to.equal(articles.length);
+        });
+
+        test("4. Every article has an id and a name matching 'head'", function () {
+          articles.forEach(a => {
+            expect(a.id).to.be.a("string").that.is.not.empty;
+            expect(a.name).to.match(/\bhead/i);
+          });
+        });
+
+        test("5. Contains the article opened in the next request", function () {
+          expect(articles.map(a => a.id)).to.include("headaches-hormonalheadaches");
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
