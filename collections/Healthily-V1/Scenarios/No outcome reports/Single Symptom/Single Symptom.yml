@@ -15,7 +15,7 @@ http:
       {
           "type": "symptom",
           "included": ["n"],
-          "excluded": ["y", "?"]
+          "excluded": ["y"]
       }
   auth:
     type: bearer
